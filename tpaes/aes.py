@@ -212,46 +212,48 @@ clair = "Two One Nine Two"
 
 W = gen_cles(cle)
 etat=convert_to_state(clair)
-affiche(etat)
 
-print(multbyalpha(2))
-print(multbyalpha(128))
-print(multbyalpha(253))
+if __name__ == "__main__":
+	affiche(etat)
 
-print("\n")
+	print(multbyalpha(2))
+	print(multbyalpha(128))
+	print(multbyalpha(253))
 
-print(multbygen(2))
-print(multbygen(128))
-print(multbygen(253))
+	print("\n")
 
-print("\n")
+	print(multbygen(2))
+	print(multbygen(128))
+	print(multbygen(253))
 
-print(mult(2, 64))
-print(mult(128, 2))
-print(mult(253, 4))
+	print("\n")
 
-# print(gen)
-# print(log_gen)
+	print(mult(2, 64))
+	print(mult(128, 2))
+	print(mult(253, 4))
 
-print("\n")
+	# print(gen)
+	# print(log_gen)
 
-print(inv(2))
-print(inv(128))
-print(inv(253))
+	print("\n")
 
-print(S(0))
-print("\n")
+	print(inv(2))
+	print(inv(128))
+	print(inv(253))
 
-# Deroulement de l'AES
-etat=AddRoundKey(etat,0)
-affiche(etat)
-for i in range(1,10):
+	print(S(0))
+	print("\n")
+
+	# Deroulement de l'AES
+	etat=AddRoundKey(etat,0)
+	# affiche(etat)
+	for i in range(1,10):
+		etat = SubBytes(etat)
+		etat = ShiftRows(etat)
+		etat = MixColumns(etat)
+		etat = AddRoundKey(etat,i)
 	etat = SubBytes(etat)
 	etat = ShiftRows(etat)
-	etat = MixColumns(etat)
-	etat = AddRoundKey(etat,i)
-etat = SubBytes(etat)
-etat = ShiftRows(etat)
-etat = AddRoundKey(etat,10)
-# affichage du cryptogramme
-affiche(etat)
+	etat = AddRoundKey(etat,10)
+	# affichage du cryptogramme
+	affiche(etat)
