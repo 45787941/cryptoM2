@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# http://veron.univ-tln.fr/ENSEIGNEMENT/M2/TP/AES/tpaes.pdf
 def transforme(W):
 # tranforme le tableau des cl'es interm'ediaires
 # repr'esent'e par 44 colonnes de taille 4 par une liste L
@@ -29,18 +29,18 @@ def affiche(L):
 
 def convert_to_state(message):
     # renvoie un message ou une cl'e sous forme d''etat
-    state = [0]*4
-    for i in range(0,4):
-        state[i] = []
-    i = 0
-    j = 0
-    while(i < len(message)):
-        state[j].append(ord(message[i]))
-        i += 1
-        j += 1
-        if(i%4 == 0):
-            j = 0
-    return state
+	state = [0]*4
+	for i in range(0,4):
+		state[i] = []
+	i = 0
+	j = 0
+	while(i < len(message)):
+		state[j].append(ord(message[i]))
+		i += 1
+		j += 1
+		if(i%4 == 0):
+			j = 0
+	return state
 
 def multbyalpha(x):
 	# A COMPLETER, RENVOIE y = alpha * x dans le corps F_2^8
@@ -146,8 +146,12 @@ def SubBytes(etat):
 def ShiftRows(etat):
 # renvoie dans state le tableau etat
 # aprÃ¨s application de la transformation ShiftRows
-	state = [etat[0]]
-	# A COMPLETER
+	state = [0]*4
+	for i in range(0,4):
+		state[i] = []
+	for i in range(0,4):
+		for j in range(0,4):
+			state[i].append(etat[i][(j+i)%4])
 	return state
 
 def MixColumns(etat):
@@ -160,8 +164,15 @@ def MixColumns(etat):
 # et chaque colonne de etat est consid'er'e comme un vecteur
 # de F_2^8, voir section 4.2.3 page 12 de aes-standard.pdf
 # et le transparent 7 de aes-exemple.pdf
-	state = []
-	# A COMPLETER
+	state = [0]*4
+	for i in range(0, 4):
+		state[i] = []
+	for i in range(0,4):
+		for j in range(0,4):
+			val = 0
+			for k in range(0,4):
+				val ^= mult(matrix_mix_columns[i][k], etat[k][j])
+			state[i].append(val)
 	return state
 
 def AddRoundKey(etat,tour):
@@ -219,8 +230,8 @@ print(mult(2, 64))
 print(mult(128, 2))
 print(mult(253, 4))
 
-print(gen)
-print(log_gen)
+# print(gen)
+# print(log_gen)
 
 print("\n")
 
@@ -229,10 +240,11 @@ print(inv(128))
 print(inv(253))
 
 print(S(0))
-z = SubBytes(etat)
-affiche(z)
+print("\n")
+
 # Deroulement de l'AES
-"""etat=AddRoundKey(etat,0)
+etat=AddRoundKey(etat,0)
+affiche(etat)
 for i in range(1,10):
 	etat = SubBytes(etat)
 	etat = ShiftRows(etat)
@@ -242,4 +254,4 @@ etat = SubBytes(etat)
 etat = ShiftRows(etat)
 etat = AddRoundKey(etat,10)
 # affichage du cryptogramme
-affiche(etat)"""
+affiche(etat)
