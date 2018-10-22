@@ -43,6 +43,13 @@ def SubBytesInv(etat):
 			state[i].append(inverseS[etat[i][j]])
 	return state
 
+def convert_to_clair(state):
+    clair = ''
+    for i in range(0,4):
+        for j in range(0,4):
+            clair += chr(state[j][i])
+    return clair
+
 if __name__ == '__main__':
     # TESTS FCT
     # test = aes.MixColumns(matrix_mix_columnsInv)
@@ -68,3 +75,4 @@ if __name__ == '__main__':
 	# affichage du cryptogramme
     print("matrice decryptee")
     aes.affiche(etat)
+    print(convert_to_clair(etat))
